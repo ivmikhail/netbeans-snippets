@@ -1,0 +1,30 @@
+private static ${currClass currClassName default="Object" editable="true"} get${currClass}(${crs type="javax.sql.rowset.CachedRowSet" default="CachedRowSet" editable="false"} rowset, boolean isSingleRow) throws ${ex type="java.sql.SQLException" default="SQLException" editable="false"} {
+    boolean hasRows = true;
+    ${currClass} result = null;
+    if (isSingleRow) {
+        hasRows = rowset.next();
+    }
+
+    if (hasRows) {
+        result = new ${currClass}(
+            ${cursor}
+        );
+    }
+    return result;
+}
+
+private static ${list type="java.util.List" default="List" editable="false"}<${currClass}> get${currClass}s(CachedRowSet rowset) {
+    ${list}<${currClass}> items = new ${alist type="java.util.ArrayList" default="ArrayList" editable="false"}<${currClass}>();
+    
+    try {
+        while (rowset.next()) {
+            ${currClass} item = get${currClass}(rowset, false);
+            if (item != null) {
+                items.add(item);
+            }
+        }
+    } catch (SQLException ex) {
+        AppLogger.getInstance().error("Ошибка при выборке ${currClass} из БД", ex);
+    }
+    return items;
+}

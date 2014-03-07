@@ -1,0 +1,15 @@
+Connection conn = null;
+
+try {
+    conn = PgConnector.getConnection();
+    PreparedStatement ps = conn.prepareStatement("${cursor}");
+    ResultSet rs = ps.executeQuery();
+    
+    while(rs.next()) {
+
+    }
+} catch (SQLException ex) {
+    AppLogger.getInstance().error("", ex);
+} finally {
+    PgConnector.freeConnection(conn);
+}

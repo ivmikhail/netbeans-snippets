@@ -1,0 +1,53 @@
+<#assign licenseFirst = "/*">
+<#assign licensePrefix = " * ">
+<#assign licenseLast = " */">
+<#include "../Licenses/license-${project.license}.txt">
+
+<#if package?? && package != "">
+package ${package};
+
+</#if>
+/**
+ *
+ * @author ${user}
+ */
+public enum ${name} {
+
+    private final int code;
+    private final String name;
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    private ${name}(int code, String name) {
+        this.code = code;
+        this.name = name;
+    }
+
+    public static ${name} valueOf(int code) {
+        ${name} result = null;
+        for(${name} val : values()) {
+            if(val.getCode() == code) {
+                result = val;
+                break;
+            }
+        }
+        return result;
+    }
+
+    public static ${name} valueOf(String name) {
+        ${name} result = null;
+        for(${name} val : values()) {
+            if(val.getName().equalsIgnoreCase(name)) {
+                result = val;
+                break;
+            }
+        }
+        return result;
+    }
+}
